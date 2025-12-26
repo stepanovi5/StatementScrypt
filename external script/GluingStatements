@@ -1,0 +1,13 @@
+import pandas as pd
+from pathlib import Path
+
+files = Path("statements").glob("*")
+
+dfs = []
+for f in files:
+    if f.suffix in [".xlsx", ".csv", ".ods"]:
+        df = pd.read_excel(f)  # или read_csv
+        dfs.append(df)
+
+merged = pd.concat(dfs, ignore_index=True)
+merged.to_excel("merged.xlsx", index=False)
